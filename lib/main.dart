@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_perguntas/questao.dart';
+import 'package:projeto_perguntas/respostas.dart';
 
 void main() => runApp(const PerguntaApp());
 
@@ -17,7 +18,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
     setState(() {
       _perguntaSelecionada++;
     });
-    print(_perguntaSelecionada);
   }
 
   @override
@@ -40,20 +40,10 @@ class _PerguntaAppState extends State<PerguntaApp> {
         children: [
           Questao(perguntas[_perguntaSelecionada]),
           const SizedBox(height: 8.0),
-          TextButton(
-            onPressed: _responder,
-            child: const Text('resposta 1'),
-          ),
           const SizedBox(height: 8.0),
-          TextButton(
-            onPressed: _responder,
-            child: const Text('resposta 2'),
-          ),
-          const SizedBox(height: 8.0),
-          TextButton(
-            onPressed: _responder,
-            child: const Text('resposta 3'),
-          ),
+          Respostas('resposta 1', _responder),
+          Respostas('resposta 2', _responder),
+          Respostas('resposta 3', _responder),
         ],
       ),
     ));
