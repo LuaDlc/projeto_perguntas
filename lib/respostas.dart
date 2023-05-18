@@ -18,7 +18,7 @@ class Respostas extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: (10 *
-          40), //double.infinity tem o mesmo tamanho, (10 * 40) tb é outra opcao
+          30), //double.infinity tem o mesmo tamanho, (10 * 40) tb é outra opcao
       child: ElevatedButton(
         onPressed: quandoSelecionado,
         style: ButtonStyle(
