@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_perguntas/questao.dart';
-import 'package:projeto_perguntas/respostas.dart';
 import 'package:projeto_perguntas/resultado.dart';
+import 'package:projeto_perguntas/questionario.dart';
 
 void main() => runApp(const PerguntaApp());
 
@@ -15,7 +14,7 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
-  final List<Map> _perguntas = [
+  final _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita?',
       'respostas': ['preto', 'vermelho', 'verde', 'branco'],
@@ -39,18 +38,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
     }
   }
 
-  //funcao get que retorna a perguntaSelecionada sendo menor que o tamanho da lista perguntas
   bool get temPerguntaSelecionada {
     return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String?> respostas =
-        temPerguntaSelecionada // se a pergunta estiver sido selecionada reporta outra pergunta
-            ? _perguntas[_perguntaSelecionada]['respostas']
-            : [];
-
     //criando uma isntancia
     return MaterialApp(
         //recebe parametros noemados
@@ -62,16 +55,10 @@ class _PerguntaAppState extends State<PerguntaApp> {
             ),
             //outro componente dentro do scaffold
             body: temPerguntaSelecionada
-                ? Column(
-                    children: [
-                      Questao(_perguntas[_perguntaSelecionada]['texto']),
-                      const SizedBox(height: 8.0),
-                      const SizedBox(height: 8.0),
-                      ...respostas
-                          .map((t) => Respostas(t, _responder))
-                          .toList(), // essa é a lista com as repostas, os ... adiciona essa lista dentro de outra lista perguntas
-                    ],
-                  )
+                ? Questionario(
+                    perguntas: _perguntas,
+                    perguntaSelecionada: _perguntaSelecionada,
+                    responder: _responder)
                 : const Resultado() //será uma pagina talvez com o numero de acertos
             ));
   }
