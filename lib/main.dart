@@ -15,7 +15,8 @@ class PerguntaApp extends StatefulWidget {
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
   var _pontuacaoTotal = 0;
-  final _perguntas = const [
+  var pontuacao = 0;
+  final List<Map<String, Object>> _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita?',
       'respostas': [
@@ -55,7 +56,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
         _pontuacaoTotal += pontuacao!;
       });
     }
-    print(_pontuacaoTotal);
+  }
+
+//essa funcao sera a pergunta selecionada e pontuacao total
+//vai ser passada como parametro no componente resultado na main
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   bool? get temPerguntaSelecionada {
@@ -68,18 +77,22 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
         //recebe parametros noemados
         home: Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                  //o texto perguntas é um parametro posicional
-                  'perguntas'),
-            ),
-            //outro componente dentro do scaffold
-            body: temPerguntaSelecionada!
-                ? Questionario(
-                    perguntas: _perguntas,
-                    perguntaSelecionada: _perguntaSelecionada,
-                    responder: _responder)
-                : const Resultado() //será uma pagina talvez com o numero de acertos
-            ));
+      appBar: AppBar(
+        title: const Text(
+            //o texto perguntas é um parametro posicional
+            'perguntas'),
+      ),
+      //outro componente dentro do scaffold
+      body: temPerguntaSelecionada!
+          ? Questionario(
+              perguntas: _perguntas,
+              perguntaSelecionada: _perguntaSelecionada,
+              responder: _responder)
+          : Resultado(
+              _pontuacaoTotal,
+              _reiniciarQuestionario,
+              pontuacao: null,
+            ), //será uma pagina talvez com o numero de acertos
+    ));
   }
 }

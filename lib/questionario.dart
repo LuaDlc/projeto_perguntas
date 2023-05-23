@@ -20,7 +20,7 @@ class Questionario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String?, dynamic>> respostas = temPerguntaSelecionada!
+    List<Map<String, Object>> respostas = temPerguntaSelecionada!
         ? perguntas[perguntaSelecionada!]['respostas']
             as List<Map<String, Object>>
         : [];
@@ -28,12 +28,11 @@ class Questionario extends StatelessWidget {
       children: [
         Questao(perguntas[perguntaSelecionada!]['texto'] as String),
         const SizedBox(height: 8.0),
-        const SizedBox(height: 8.0),
         ...respostas.map((resp) {
           return Respostas(
-              resp['texto'],
+              resp['texto'] as String,
               () => responder(
-                    resp['pontuacao'],
+                    resp['pontuacao'] as int,
                   ));
         }).toList(), // essa é a lista com as repostas, os ... adiciona essa lista dentro de outra lista perguntas
       ],
